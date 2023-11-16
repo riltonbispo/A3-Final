@@ -1,18 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './assets/styles/variables.css';
-import './assets/styles/global-styles.css';
-import Home from './templates/Home';
-import GameModal from './components/GameModal';
-import EditGameModal from './components/EditGameModal';
-import PlatformModal from './components/PlatformModal';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./styles/variables.css";
+import "./styles/global-styles.css";
+import App from "./App.jsx";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <>
-    <Home />
-    <GameModal />
-    <EditGameModal />
-    <PlatformModal />
-  </>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
