@@ -1,0 +1,22 @@
+.footer {
+  background: #1a202c;
+  padding-block: 2rem;
+}
+
+.footer__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: min(90%, 1200px);
+  margin: 0 auto;
+  width: min(90%, 1200px);
+}
+
+.footer__logo {
+  width: 100px;
+}
+
+.footer__copy {
+  color: white;
+}
