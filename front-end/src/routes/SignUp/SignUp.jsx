@@ -25,9 +25,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className={style.login}>
+    <div className={style.container}>
       <Header />
-      <section className={style.container}>
+      <section className={style.content}>
         <div className={style.image}>
           <img src={GameImage} alt="garoto jogando" />
         </div>

@@ -1,26 +1,11 @@
-.login {
+.container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
 }
 
-.header__container {
-  border-bottom: 1px solid var(--colorBlack);
-}
-
-.header__content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 20px;
-  width: min(90%, 1200px);
-  margin: 0 auto;
-  background-color: white !important;
-}
-
-.container {
+.content {
   width: min(90%, 1200px);
   margin: 0 auto;
   display: flex;
@@ -62,27 +47,6 @@
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 150%;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 0.5rem;
-
-  & label {
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  & input {
-    background-color: transparent;
-    border-radius: 0.3rem;
-    border: 2px solid #1a202c;
-    padding: 1em;
-    color: #1a202c;
-    margin-top: 0.5rem;
-  }
 }
 
 .buttons {
