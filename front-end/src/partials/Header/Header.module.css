@@ -1,0 +1,14 @@
+.header__container {
+  border-bottom: 1px solid var(--colorBlack);
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  width: min(90%, 1200px);
+  margin: 0 auto;
+  background-color: white !important;
+}
