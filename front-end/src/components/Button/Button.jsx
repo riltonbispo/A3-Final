@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Button.module.css'
 
-const Button = ({ label, secondary, del, link }) => {
+const Button = ({ label, secondary, del }) => {
   const buttonClass =
     secondary
       ? styles.btn__secondary
@@ -10,9 +10,7 @@ const Button = ({ label, secondary, del, link }) => {
         : styles.btn__primary;
 
   return (
-    <a href={link}>
-      <button className={`${styles.btn} ${buttonClass}`}>{label}</button>
-    </a>
+    <button className={`${styles.btn} ${buttonClass}`}>{label}</button>
   )
 }
 

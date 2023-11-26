@@ -5,6 +5,7 @@ import style from './SignUp.module.css'
 import Button from '../../components/Button/Button';
 import GameImage from '../../assets/img/image-login.png'
 import Field from '../../components/Field';
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -34,13 +35,17 @@ const SignUp = () => {
           <form className={style.form}>
             <span className={style.title}>Criar Conta</span>
             <p className={style.description}>Crie sua conta e acesse todo o seu catálogo de jogos</p>
-            <Field  label='Email' type="email" placeholder="exemple@email.com" onChange={handleEmailChange}/>
-            <Field  label='Senha' type="password" placeholder="******" onChange={handlePasswordChange}/>
-            <Field  label='Confirmar Senha' type="password" placeholder="******" onChange={handleConfirmPasswordChange}/>
+            <Field label='Email' type="email" placeholder="exemple@email.com" onChange={handleEmailChange} />
+            <Field label='Senha' type="password" placeholder="******" onChange={handlePasswordChange} />
+            <Field label='Confirmar Senha' type="password" placeholder="******" onChange={handleConfirmPasswordChange} />
           </form>
           <div className={style.buttons}>
-            <Button link="index.html" label="Já Possuo Conta" />
+            <Link to='/'>
+              <Button label="Já Possuo Conta" />
+            </Link>
+            <Link to='/home'>
             <Button link="home.html" secondary label="Criar Conta" />
+            </Link>
           </div>
         </div>
       </section>
