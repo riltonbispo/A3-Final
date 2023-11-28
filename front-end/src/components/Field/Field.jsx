@@ -1,17 +1,15 @@
-import React from 'react'
-import style from './Field.module.css'
+import React, { useState } from 'react'
+import TextField from '@mui/material/TextField';
 
-const Field = ({ label, type, placeholder }) => {
+const Field = ({ label, type, inputChange }) => {
+  const [inputValue, setInputValue] = useState('');
 
   const handleChange = (event) => {
-    setInputValue(event.target.value);
+    inputChange(event.target.value)
   };
 
   return (
-    <div className={style.field}>
-      <label>{label}</label>
-      <input type={type} placeholder={placeholder} onChange={handleChange} />
-    </div>
+       <TextField fullWidth id="outlined-basic" label={label} variant="outlined" type={type} onChange={e => handleChange(e)}/>
   )
 }
 
