@@ -1,26 +1,21 @@
-import React from 'react';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import UploadIcon from '@mui/icons-material/Upload';
+import React, { useState } from 'react';
+import styles from './InputFile.module.css'
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-const InputFile = ({label}) => {
+const InputFile = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file ? file.name : null);
+  };
+
   return (
-    <TextField
-      fullWidth
-      id="input-with-icon-textfield"
-      label={label}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="start">
-            <UploadIcon />
-          </InputAdornment>
-        ),
-      }}
-      variant="outlined"
-      type='file'
-    />
+    <label for="game-photo" className={styles.container}>
+      <span className="modal__subtitle">{selectedFile || "Enviar imagem"}</span>
+      <FileUploadIcon />
+      <input type="file" name="" id="game-photo" className={styles.input} onChange={handleFileChange} />
+    </label>
   )
 }
 
