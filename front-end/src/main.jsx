@@ -2,25 +2,26 @@ import React from 'react';
 import ReactDOM from "react-dom/client";
 import "./styles/variables.css";
 import "./styles/global-styles.css";
-import App from "./App.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import SignUp from './routes/SignUp';
+import Login from './routes/Login';
+import Home from './routes/Home';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>root</div>
+    element: <Login />
   },
   {
     path: "signup",
-    element: <SignUp/>
+    element: <SignUp />
   },
   {
     path: "/home",
-    element: <App />,
+    element: <Home />,
   }
 ]);
 
