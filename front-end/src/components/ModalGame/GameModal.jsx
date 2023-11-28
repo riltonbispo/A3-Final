@@ -31,9 +31,11 @@ const GameModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Field label="Nome do Jogo" type='text' inputChange={inputChange} />
-        <InputFile label='Imagem do Jogo'/>
-        <div>
+        <div className={styles.inputs} >
+          <Field label="Nome do Jogo" type='text' inputChange={inputChange} />
+          <InputFile label='Imagem do Jogo' />
+        </div>
+        <div className={styles.rating}>
           <span className={styles.subTitle}>Nota</span>
           <Rating
             name="simple-controlled"
