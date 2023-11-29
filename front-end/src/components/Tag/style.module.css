@@ -1,0 +1,22 @@
+.tag {
+  color: white;
+
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 150%;
+
+  padding: 0.25em 0.5em;
+  border-radius: 0.2rem;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  text-transform: lowercase;
+}
+
+.categorie {
+  background-color: #35373a;
+}
+
+.platform {
+  background-color: #2d3648;
+}
