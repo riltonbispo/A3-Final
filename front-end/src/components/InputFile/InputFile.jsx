@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './InputFile.module.css'
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 
-const InputFile = () => {
+const InputFile = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -12,7 +12,7 @@ const InputFile = () => {
 
   return (
     <label htmlFor="game-photo" className={styles.container}>
-      <span className="modal__subtitle">{selectedFile || "Enviar imagem"}</span>
+      <span className="modal__subtitle">{selectedFile || props.label}</span>
       <FileUploadIcon />
       <input type="file" name="" id="game-photo" className={styles.input} onChange={handleFileChange} />
     </label>
