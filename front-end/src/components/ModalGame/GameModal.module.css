@@ -1,6 +1,12 @@
 .selects {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  & * {
+    max-width: 200px;
+  }
 }
 
 .inputs {
