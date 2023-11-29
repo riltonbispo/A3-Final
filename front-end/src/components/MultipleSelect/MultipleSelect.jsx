@@ -7,27 +7,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 
-
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: 48 * 4.5 + 8,
-      width: 250,
-    },
-  },
-};
-
-
-const MultipleSelect = ({list, title}) => {
+const MultipleSelect = ({ list, title, selectedOptions }) => {
   const [listItem, setListItem] = useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setListItem(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    setListItem(Array.isArray(value) ? value : [value]);
   };
 
   return (
@@ -41,11 +28,11 @@ const MultipleSelect = ({list, title}) => {
           value={listItem}
           onChange={handleChange}
           input={<OutlinedInput label={title} />}
-          renderValue={(selected) => selected.join(', ')}
+          renderValue={(selected) => (selected.length > 0 ? selected.join(', ') : 'Selecione')}
         >
           {list.map((item) => (
             <MenuItem key={item} value={item}>
-              <Checkbox checked={listItem.indexOf(item) > -1} />
+              <Checkbox checked={selectedOptions && selectedOptions.includes(item)} />
               <ListItemText primary={item} />
             </MenuItem>
           ))}
@@ -53,6 +40,6 @@ const MultipleSelect = ({list, title}) => {
       </FormControl>
     </div>
   );
-}
+};
 
-export default MultipleSelect
+export default MultipleSelect;
