@@ -11,7 +11,7 @@ const InputFile = () => {
   };
 
   return (
-    <label for="game-photo" className={styles.container}>
+    <label htmlFor="game-photo" className={styles.container}>
       <span className="modal__subtitle">{selectedFile || "Enviar imagem"}</span>
       <FileUploadIcon />
       <input type="file" name="" id="game-photo" className={styles.input} onChange={handleFileChange} />

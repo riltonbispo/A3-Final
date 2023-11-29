@@ -35,7 +35,7 @@ const Login = () => {
             <Field label='Senha' type="password" placeholder="******" onChange={handlePasswordChange} />
           </form>
           <div className={style.buttons}>
-            <Link to='/singup'>
+            <Link to='/signup'>
               <Button label="Criar um conta" />
             </Link>
             <Link to='/home'>
