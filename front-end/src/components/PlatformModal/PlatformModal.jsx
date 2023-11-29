@@ -35,8 +35,8 @@ function PlatformModal(props) {
         <Field label="Nome do Jogo" type='text' inputChange={inputChange} />
         </div>
         <div className={`d-flex flex-column ${styles.list}`}>
-          {platforms.map(platform => (
-            <div className='d-flex justify-content-between align-items-center'>
+          {platforms.map((platform, index) => (
+            <div className='d-flex justify-content-between align-items-center' key={`platform ${index}`}>
               <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">{platform}</InputLabel>
                 <OutlinedInput
