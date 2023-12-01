@@ -15,6 +15,21 @@ export const User = sequelize.define('User', {
   },
 })
 
+export const initialUsers = async () => {
+  try {
+
+    for (let i = 1; i <= 10; i++) {
+      await User.create({
+        Email: `user${i}@example.com`
+      });
+    }
+
+    console.log('Banco de dados sincronizado e 10 usuários criados');
+  } catch (error) {
+    console.log(`BANCO: Erro ao criar usuarios iniciais: ${error}`)
+  }
+}
+
 export const getAllUsers = async () => {
   try {
     const result = await sequelize.query(
