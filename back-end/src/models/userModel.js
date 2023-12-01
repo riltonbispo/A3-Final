@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configDB.js";
+import { QueryTypes } from "sequelize";
 
 export const User = sequelize.define('User', {
   ID: {
@@ -10,6 +11,78 @@ export const User = sequelize.define('User', {
   Email: {
     type: DataTypes.STRING(255),
     allowNull: false,
+    unique: true
   },
 })
 
+export const getAllUsers = async () => {
+  try {
+    const result = await sequelize.query(
+      "SELECT * FROM Users;",
+      { type: QueryTypes.SELECT }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao buscar Usuarios: ${error}`)
+  }
+}
+
+export const getOneUser = async (id) => {
+  try {
+    const result = await sequelize.query(
+      "SELECT * FROM Users WHERE ID = ?;",
+      {
+        replacements: [id],
+        type: QueryTypes.SELECT
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao buscar Usuario: ${error}`)
+  }
+}
+
+// export const insertUser = async (email) => {
+//   try {
+//     const result = await sequelize.query(
+//       "INSERT INTO Users (Email) VALUES (?);",
+//       {
+//         replacements: [email],
+//         type: QueryTypes.INSERT
+//       }
+//     )
+//     return result
+//   } catch (error) {
+//     console.log(`BANCO: Erro ao criar Usuario: ${error}`)
+//   }
+// }
+
+export const updateUser = async (id, email) => {
+  try {
+    const result = await sequelize.query(
+      "UPDATE Users SET Email = ? WHERE ID = ?;",
+      {
+        replacements: [email, id],
+        type: QueryTypes.UPDATE
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao atualizar Usuario: ${error}`)
+  }
+}
+
+export const deleteUser = async (id) => {
+  try {
+    const result = await sequelize.query(
+      "DELETE FROM Users WHERE ID = ?;",
+      {
+        replacements: [id],
+        type: QueryTypes.UPDATE
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao atualizar Usuario: ${error}`)
+  }
+}
