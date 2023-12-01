@@ -17,14 +17,26 @@ export const User = sequelize.define('User', {
 
 export const initialUsers = async () => {
   try {
+    const users = [
+      'user1@example.com',
+      'user2@example.com',
+      'user3@example.com',
+      'user4@example.com',
+      'user5@example.com',
+      'user6@example.com',
+      'user7@example.com',
+      'user8@example.com',
+      'user9@example.com',
+      'user10@example.com',
+    ]
 
-    for (let i = 1; i <= 10; i++) {
-      await User.create({
-        Email: `user${i}@example.com`
-      });
+    const existingUsers = await User.findAll();
+
+    if (existingUsers.length === 0) {
+      await User.bulkCreate(users.map(user => ({ Email: user })));
+      console.log('Banco de dados sincronizado e 10 usuarios criadas');
     }
 
-    console.log('Banco de dados sincronizado e 10 usuários criados');
   } catch (error) {
     console.log(`BANCO: Erro ao criar usuarios iniciais: ${error}`)
   }
