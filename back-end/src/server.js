@@ -2,19 +2,21 @@ import express from 'express'
 import { sequelize } from './configDB.js'
 import userRoutes from './routes/userRoutes.js'
 import platformRoutes from './routes/platformRoutes.js'
+import categoryRoutes from './routes/categoryRouter.js'
 import { User, initialUsers } from './models/userModel.js';
 import { Platform, initialPlatforms } from './models/platformModel.js';
+import { Category, initialCategories } from './models/categoryModel.js'
 
 const PORT = 3000;
 const app = express()
 app.use(express.json())
-
 
 const syncDatabase = async () => {
   try {
     await sequelize.sync();
     await initialUsers()
     await initialPlatforms()
+    await initialCategories()
     console.log('Banco de dados sincronizado');
   } catch (error) {
     console.error('Erro ao sincronizar o banco de dados:', error);
@@ -23,6 +25,7 @@ const syncDatabase = async () => {
 
 app.use('/users', userRoutes)
 app.use('/platforms', platformRoutes)
+app.use('/categories', categoryRoutes)
 
 app.get('/', (req, res) => {
   res.json({
