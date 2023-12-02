@@ -73,7 +73,7 @@ export const deleteUser = async (req, res) => {
     const existingUser = await User.findByPk(id);
 
     if (existingUser) {
-      await Model.deleteUser;
+      await Model.deleteUser();
       res.status(204).send();
     } else {
       return res.status(404).json({ error: 'Usuário não encontrado.' });

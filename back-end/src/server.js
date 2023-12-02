@@ -1,6 +1,7 @@
 import express from 'express'
 import { sequelize } from './configDB.js'
 import userRoutes from './routes/userRoutes.js'
+import platformRoutes from './routes/platformRoutes.js'
 import { User, initialUsers } from './models/userModel.js';
 import { Platform, initialPlatforms } from './models/platformModel.js';
 
@@ -21,6 +22,7 @@ const syncDatabase = async () => {
 };
 
 app.use('/users', userRoutes)
+app.use('/platforms', platformRoutes)
 
 app.get('/', (req, res) => {
   res.json({

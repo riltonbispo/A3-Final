@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+import { QueryTypes } from "sequelize";
 import { sequelize } from "../configDB.js";
 
 export const Platform = sequelize.define('Platform', {
@@ -26,5 +27,63 @@ export const initialPlatforms = async () => {
 
   } catch (error) {
     console.log(`BANCO: Erro ao criar usuarios iniciais: ${error}`)
+  }
+}
+
+
+export const getAllPlatforms = async () => {
+  try {
+    const result = await sequelize.query(
+      "SELECT * FROM Platforms;",
+      { type: QueryTypes.SELECT }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao buscar Plataformas: ${error}`)
+  }
+}
+
+export const getOnePlatform = async (id) => {
+  try {
+    const result = await sequelize.query(
+      "SELECT * FROM Platforms WHERE ID = ?;",
+      {
+        replacements: [id],
+        type: QueryTypes.SELECT
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao buscar Plataforma: ${error}`)
+  }
+}
+
+export const updatePlatform = async (id,name) => {
+  try {
+    const result = await sequelize.query(
+      "UPDATE Platforms SET Name = ? WHERE ID = ?;",
+      {
+        replacements: [name, id],
+        type: QueryTypes.UPDATE
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao atualizar Plataforma: ${error}`)
+  }
+}
+
+export const deletePlatform = async (id) => {
+  try {
+    const result = await sequelize.query(
+      "DELETE FROM Platforms WHERE ID = ?;",
+      {
+        replacements: [id],
+        type: QueryTypes.DELETE
+      }
+    )
+    return result
+  } catch (error) {
+    console.log(`BANCO: Erro ao deletar Plataforma: ${error}`)
   }
 }
