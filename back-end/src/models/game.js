@@ -55,20 +55,42 @@ export const getAll = async () => {
   }
 };
 
+// models/game.js
+
 export const getOne = async (id) => {
   try {
     const result = await sequelize.query(
-      "SELECT * FROM Games WHERE ID = ?;",
+      "SELECT Games.*, " +
+      "GROUP_CONCAT(DISTINCT Platforms.Name) AS Platforms, " +
+      "GROUP_CONCAT(DISTINCT Categories.Name) AS Categories " +
+      "FROM Games " +
+      "LEFT JOIN GamePlatforms ON Games.ID = GamePlatforms.Game_ID " +
+      "LEFT JOIN Platforms ON GamePlatforms.Platform_ID = Platforms.ID " +
+      "LEFT JOIN GameCategories ON Games.ID = GameCategories.Game_ID " +
+      "LEFT JOIN Categories ON GameCategories.Category_ID = Categories.ID " +
+      "WHERE Games.ID = ? " +
+      "GROUP BY Games.ID;",
       {
         replacements: [id],
         type: QueryTypes.SELECT
       }
-    )
-    return result
+    );
+
+    if (result.length > 0) {
+      return {
+        ...result[0],
+        Platforms: result[0].Platforms ? result[0].Platforms.split(",") : [],
+        Categories: result[0].Categories ? result[0].Categories.split(",") : []
+      };
+    } else {
+      return null; // Retorna null se o jogo não for encontrado
+    }
   } catch (error) {
-    console.log(`BANCO: Erro ao buscar Game: ${error}`)
+    console.log(`BANCO: Erro ao buscar Game: ${error}`);
+    throw error;
   }
-}
+};
+
 
 export const update = async (id, newData) => {
   try {
