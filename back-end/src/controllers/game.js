@@ -29,10 +29,19 @@ export const getOne = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const { Name, User_Id, Image, Rating } = req.body;
+    const { Name, User_Id, Rating } = req.body;
+    const Image = req.file.filename;
 
-    if (Name && User_Id) {
-      const newGame = await Model.Game.create({ Name, User_Id, Image, Rating });
+    if (Name && User_Id && Image) {
+
+      const responseData = {
+        Name,
+        User_Id: parseInt(User_Id),
+        Rating: parseInt(Rating),
+        Image
+      };
+
+      const newGame = await Model.Game.create(responseData);
 
       return res.status(201).json(newGame);
     } else {
