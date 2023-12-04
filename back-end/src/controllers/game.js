@@ -1,9 +1,8 @@
-import * as GameModel from "../models/gameModel.js";
-const { Game } = GameModel;
+import * as Model from "../models/game.js";
 
-export const getAllGames = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
-    const result = await GameModel.getAllGames();
+    const result = await Model.getAll();
     res.json(result);
   } catch (error) {
     console.log(`API: Erro ao buscar Jogos: ${error}`);
@@ -11,10 +10,10 @@ export const getAllGames = async (req, res) => {
   }
 };
 
-export const getOneGame = async (req, res) => {
+export const getOne = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const result = await GameModel.getOneGame(id);
+    const result = await Model.getOne(id);
 
     if (result) {
       res.status(200).json(result);
@@ -28,12 +27,12 @@ export const getOneGame = async (req, res) => {
   }
 };
 
-export const createGame = async (req, res) => {
+export const create = async (req, res) => {
   try {
     const { Name, User_Id, Image, Rating } = req.body;
 
     if (Name && User_Id) {
-      const newGame = await Game.create({ Name, User_Id, Image, Rating });
+      const newGame = await Model.Game.create({ Name, User_Id, Image, Rating });
 
       return res.status(201).json(newGame);
     } else {
@@ -45,15 +44,15 @@ export const createGame = async (req, res) => {
   }
 };
 
-export const updateGame = async (req, res) => {
+export const update = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { Name, Image, Rating } = req.body;
 
-    const existingGame = await Game.findByPk(id);
+    const existingGame = await Model.Game.findByPk(id);
 
     if (existingGame) {
-      await GameModel.updateGame(id, { Name, Image, Rating });
+      await Model.update(id, { Name, Image, Rating });
 
       return res.status(200).send();
     } else {
@@ -66,14 +65,14 @@ export const updateGame = async (req, res) => {
   }
 };
 
-export const deleteGame = async (req, res) => {
+export const del = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
 
-    const existingGame = await Game.findByPk(id);
+    const existingGame = await Model.Game.findByPk(id);
 
     if (existingGame) {
-      await GameModel.deleteGame(id);
+      await Model.del(id);
       res.status(204).send();
     } else {
       return res.status(404).json({ error: 'Jogo não encontrado.' });

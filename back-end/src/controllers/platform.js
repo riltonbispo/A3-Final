@@ -1,9 +1,8 @@
-import * as Model from '../models/platformModel.js'
-const { Platform } = Model
+import * as Model from '../models/platform.js'
 
-export const getAllPlatforms = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
-    const result = await Model.getAllPlatforms()
+    const result = await Model.getAll()
     res.json(result)
   } catch (error) {
     console.log(`API: Erro ao buscar Plataformas: ${error}`)
@@ -11,10 +10,10 @@ export const getAllPlatforms = async (req, res) => {
   }
 }
 
-export const getOnePlatform = async (req,res) => {
+export const getOne = async (req,res) => {
   try {
     const id = parseInt(req.params.id)
-    const result = await Model.getOnePlatform(id)
+    const result = await Model.getOne(id)
 
     if (result) {
       res.status(200).json(result);
@@ -28,12 +27,12 @@ export const getOnePlatform = async (req,res) => {
   }
 }
 
-export const createPlatform = async (req,res) => {
+export const create = async (req,res) => {
   try {
     const { Name } = req.body
 
     if (Name) {
-      const newPlatform = await Platform.create({ Name })
+      const newPlatform = await Model.Platform.create({ Name })
 
       return res.status(201).json(newPlatform)
     } else {
@@ -45,15 +44,15 @@ export const createPlatform = async (req,res) => {
   }
 }
 
-export const updatePlatform = async (req,res) => {
+export const update = async (req,res) => {
   try {
     const id = parseInt(req.params.id);
     const { Name } = req.body;
 
-    const existingPlatform = await Platform.findByPk(id);
+    const existingPlatform = await Model.Platform.findByPk(id);
 
     if (existingPlatform) {
-      Model.updatePlatform(id, Name);
+      Model.update(id, Name);
       return res.status(200).json({ message: 'Plataforma atualizada com sucesso.' });
     } else {
       return res.status(404).json({ error: 'Plataforma não encontrada.' });
@@ -65,14 +64,14 @@ export const updatePlatform = async (req,res) => {
   }
 }
 
-export const deletePlatform = async (req,res) => {
+export const del = async (req,res) => {
   try {
     const id = parseInt(req.params.id)
 
-    const existingPlatform = await Platform.findByPk(id);
+    const existingPlatform = await Model.Platform.findByPk(id);
 
     if (existingPlatform) {
-      await Model.deletePlatform(id);
+      await Model.del(id);
       res.status(204).send();
     } else {
       return res.status(404).json({ error: 'Plataforma não encontrado.' });

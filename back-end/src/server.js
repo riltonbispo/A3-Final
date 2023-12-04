@@ -1,15 +1,15 @@
 import express from 'express'
 import { sequelize } from './configDB.js'
-import userRoutes from './routes/userRoutes.js'
-import platformRoutes from './routes/platformRoutes.js'
-import categoryRoutes from './routes/categoryRouter.js'
-import gameRoutes from './routes/gameRoutes.js'
-import { User, initialUsers } from './models/userModel.js';
-import { Platform, initialPlatforms } from './models/platformModel.js';
-import { Category, initialCategories } from './models/categoryModel.js'
-import { Game } from './models/gameModel.js'
-import { GamePlatform } from './models/gamePlatformModel.js'
-import { GameCategory } from './models/gameCategoryModel.js'
+import userRoutes from './routes/user.js'
+import platformRoutes from './routes/platform.js'
+import categoryRoutes from './routes/category.js'
+import gameRoutes from './routes/game.js'
+import { User, initialUsers } from './models/user.js';
+import { Platform, initialPlatforms } from './models/platform.js';
+import { Category, initialCategories } from './models/category.js'
+import { Game } from './models/game.js'
+import { GamePlatform } from './models/gamePlatform.js'
+import { GameCategory } from './models/gameCategory.js'
 
 const PORT = 3000;
 const app = express()

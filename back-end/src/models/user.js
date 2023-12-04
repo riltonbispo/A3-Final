@@ -42,7 +42,7 @@ export const initialUsers = async () => {
   }
 }
 
-export const getAllUsers = async () => {
+export const getAll = async () => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Users;",
@@ -54,7 +54,7 @@ export const getAllUsers = async () => {
   }
 }
 
-export const getOneUser = async (id) => {
+export const getOne = async (id) => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Users WHERE ID = ?;",
@@ -69,22 +69,7 @@ export const getOneUser = async (id) => {
   }
 }
 
-// export const insertUser = async (email) => {
-//   try {
-//     const result = await sequelize.query(
-//       "INSERT INTO Users (Email) VALUES (?);",
-//       {
-//         replacements: [email],
-//         type: QueryTypes.INSERT
-//       }
-//     )
-//     return result
-//   } catch (error) {
-//     console.log(`BANCO: Erro ao criar Usuario: ${error}`)
-//   }
-// }
-
-export const updateUser = async (id, email) => {
+export const update = async (id, email) => {
   try {
     const result = await sequelize.query(
       "UPDATE Users SET Email = ? WHERE ID = ?;",
@@ -99,7 +84,7 @@ export const updateUser = async (id, email) => {
   }
 }
 
-export const deleteUser = async (id) => {
+export const del = async (id) => {
   try {
     const result = await sequelize.query(
       "DELETE FROM Users WHERE ID = ?;",

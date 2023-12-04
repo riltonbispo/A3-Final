@@ -1,4 +1,4 @@
-import * as Model from '../models/gamePlatformModel.js'
+import * as Model from '../models/gamePlatform.js'
 
 
 export const getAll = async (req, res) => {

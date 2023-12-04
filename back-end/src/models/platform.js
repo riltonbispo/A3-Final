@@ -31,7 +31,7 @@ export const initialPlatforms = async () => {
 }
 
 
-export const getAllPlatforms = async () => {
+export const getAll = async () => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Platforms;",
@@ -43,7 +43,7 @@ export const getAllPlatforms = async () => {
   }
 }
 
-export const getOnePlatform = async (id) => {
+export const getOne = async (id) => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Platforms WHERE ID = ?;",
@@ -58,7 +58,7 @@ export const getOnePlatform = async (id) => {
   }
 }
 
-export const updatePlatform = async (id,name) => {
+export const update = async (id,name) => {
   try {
     const result = await sequelize.query(
       "UPDATE Platforms SET Name = ? WHERE ID = ?;",
@@ -73,7 +73,7 @@ export const updatePlatform = async (id,name) => {
   }
 }
 
-export const deletePlatform = async (id) => {
+export const del = async (id) => {
   try {
     const result = await sequelize.query(
       "DELETE FROM Platforms WHERE ID = ?;",

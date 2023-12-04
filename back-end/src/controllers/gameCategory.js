@@ -1,4 +1,4 @@
-import * as Model from '../models/gameCategoryModel.js'
+import * as Model from '../models/gameCategory.js'
 
 export const getAll = async (req, res) => {
   try {

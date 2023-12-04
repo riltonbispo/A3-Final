@@ -1,10 +1,9 @@
-import * as Model from "../models/userModel.js";
-const { User } = Model;
+import * as Model from "../models/user.js";
 
 
-export const getAllUsers = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
-    const result = await Model.getAllUsers()
+    const result = await Model.getAll()
     res.json(result)
   } catch (error) {
     console.log(`API: Erro ao buscar Usuarios: ${error}`)
@@ -12,10 +11,10 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-export const getOneUser = async (req, res) => {
+export const getOne = async (req, res) => {
   try {
     const id = parseInt(req.params.id)
-    const result = await Model.getOneUser(id)
+    const result = await Model.getOne(id)
 
     if (result) {
       res.status(200).json(result);
@@ -29,12 +28,12 @@ export const getOneUser = async (req, res) => {
   }
 }
 
-export const createUser = async (req, res) => {
+export const create = async (req, res) => {
   try {
     const { Email } = req.body
 
     if (Email) {
-      const newUser = await User.create({ Email })
+      const newUser = await Model.User.create({ Email })
 
       return res.status(201).json(newUser)
     } else {
@@ -45,7 +44,7 @@ export const createUser = async (req, res) => {
   }
 }
 
-export const updateUser = async (req, res) => {
+export const update = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { Email } = req.body;
@@ -53,7 +52,7 @@ export const updateUser = async (req, res) => {
     const existingUser = await User.findByPk(id);
 
     if (existingUser) {
-      Model.updateUser(id, Email);
+      Model.update(id, Email);
 
       return res.status(200)
     } else {
@@ -66,14 +65,14 @@ export const updateUser = async (req, res) => {
   }
 }
 
-export const deleteUser = async (req, res) => {
+export const del = async (req, res) => {
   try {
     const id = parseInt(req.params.id)
 
     const existingUser = await User.findByPk(id);
 
     if (existingUser) {
-      await Model.deleteUser(id);
+      await Model.del(id);
       res.status(204).send();
     } else {
       return res.status(404).json({ error: 'Usuário não encontrado.' });

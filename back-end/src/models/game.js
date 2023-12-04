@@ -30,7 +30,7 @@ export const Game = sequelize.define('Game', {
   },
 });
 
-export const getAllGames = async () => {
+export const getAll = async () => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Games;",
@@ -42,7 +42,7 @@ export const getAllGames = async () => {
   }
 }
 
-export const getOneGame = async (id) => {
+export const getOne = async (id) => {
   try {
     const result = await sequelize.query(
       "SELECT * FROM Games WHERE ID = ?;",
@@ -57,7 +57,7 @@ export const getOneGame = async (id) => {
   }
 }
 
-export const updateGame = async (id, newData) => {
+export const update = async (id, newData) => {
   try {
     const { Name, Image, Rating } = newData;
     const result = await sequelize.query(
@@ -73,7 +73,7 @@ export const updateGame = async (id, newData) => {
   }
 }
 
-export const deleteGame = async (id) => {
+export const del = async (id) => {
   try {
     const result = await sequelize.query(
       "DELETE FROM Games WHERE ID = ?;",
