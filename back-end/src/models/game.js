@@ -33,14 +33,27 @@ export const Game = sequelize.define('Game', {
 export const getAll = async () => {
   try {
     const result = await sequelize.query(
-      "SELECT * FROM Games;",
+      "SELECT Games.*, " +
+      "GROUP_CONCAT(DISTINCT Platforms.Name) AS Platforms, " +
+      "GROUP_CONCAT(DISTINCT Categories.Name) AS Categories " +
+      "FROM Games " +
+      "LEFT JOIN GamePlatforms ON Games.ID = GamePlatforms.Game_ID " +
+      "LEFT JOIN Platforms ON GamePlatforms.Platform_ID = Platforms.ID " +
+      "LEFT JOIN GameCategories ON Games.ID = GameCategories.Game_ID " +
+      "LEFT JOIN Categories ON GameCategories.Category_ID = Categories.ID " +
+      "GROUP BY Games.ID;",
       { type: QueryTypes.SELECT }
-    )
-    return result
+    );
+    return result.map(row => ({
+      ...row,
+      Platforms: row.Platforms ? row.Platforms.split(",") : [],
+      Categories: row.Categories ? row.Categories.split(",") : []
+    }));
   } catch (error) {
-    console.log(`BANCO: Erro ao buscar Games: ${error}`)
+    console.log(`BANCO: Erro ao buscar Jogos: ${error}`);
+    throw error;
   }
-}
+};
 
 export const getOne = async (id) => {
   try {
