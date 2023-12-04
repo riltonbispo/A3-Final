@@ -12,15 +12,15 @@ const GameCard = ({ title, rating, categories, platforms, imageUrl }) => {
     <div className={styles.container}>
       <img src={imageUrl} alt={title} className={styles.image} />
       <div className={styles.info}>
+        <div className={styles.details}>
+          <h3 className={styles.title}>{title}</h3>
+          <Button secondary label="Editar" onClick={() => setShowModalGame(true)} />
+        </div>
         <Rating
           name="simple-controlled"
           value={rating}
           readOnly
         />
-        <div className={styles.details}>
-          <h3 className={styles.title}>{title}</h3>
-          <Button secondary label="Editar" onClick={() => setShowModalGame(true)} />
-        </div>
         <div className={styles.tags}>
           <div>
             {categories.map(category => (
