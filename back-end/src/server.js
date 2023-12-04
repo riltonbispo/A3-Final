@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors';
 import { sequelize } from './configDB.js'
 import userRoutes from './routes/user.js'
 import platformRoutes from './routes/platform.js'
@@ -13,6 +14,7 @@ import { GameCategory } from './models/gameCategory.js'
 
 const PORT = 3000;
 const app = express()
+app.use(cors());
 app.use(express.json())
 
 const syncDatabase = async () => {
