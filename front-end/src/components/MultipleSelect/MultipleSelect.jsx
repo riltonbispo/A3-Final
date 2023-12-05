@@ -6,40 +6,21 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const MultipleSelect = ({ list, title, selectedOptions }) => {
-  const [listItem, setListItem] = useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setListItem(Array.isArray(value) ? value : [value]);
-  };
-
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">{title}</InputLabel>
-        <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={listItem}
-          onChange={handleChange}
-          input={<OutlinedInput label={title} />}
-          renderValue={(selected) => (selected.length > 0 ? selected.join(', ') : 'Selecione')}
-        >
-          {list.map((item) => (
-            <MenuItem key={item} value={item}>
-              <Checkbox checked={selectedOptions && selectedOptions.includes(item)} />
-              <ListItemText primary={item} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <span>{title}</span>
+      <FormGroup>
+        {list.map(item => (
+          <FormControlLabel control={<Checkbox defaultChecked={selectedOptions.includes(item)} />} label={item} />
+        ))}
+      </FormGroup>
     </div>
   );
 };
 
 export default MultipleSelect;
+

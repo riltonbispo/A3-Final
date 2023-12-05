@@ -15,12 +15,11 @@ const EditGameModal = (props) => {
   const [selectedCategories, setSelectedCategories] = useState(props.selectedCategories || []);
   const [selectedPlatforms, setSelectedPlatforms] = useState(props.selectedPlatforms || []);
 
-
   const inputChange = (value) => {
     setGameName(value);
   }
-  const platforms = ['Steam', 'Epic', 'PSN', 'Xbox', 'PlayStore']
-  const categories = ['jogado', 'jogando', 'zerado', 'nao-recomendo']
+  const platforms = ['Steam', 'Epic Games', 'Ubisoft Store', 'GOG.com', 'Xbox App', 'Origin', 'Battler Net', 'Blizzard', 'PLayStore', 'App Store']
+  const categories = ['Jogado', 'Jogando', 'Zerado', 'Nao Recomendo', 'outro status']
 
   return (
     <Modal
@@ -36,7 +35,7 @@ const EditGameModal = (props) => {
       <Modal.Body>
         <div className={styles.inputs} >
           <Field label={props.title} type='text' inputChange={inputChange} />
-          <InputFile label='Alterar imagem' />
+          <InputFile label={props.imageTitle} />
         </div>
         <div className={styles.rating}>
           <span className={styles.subTitle}>Alterar nota:</span>
