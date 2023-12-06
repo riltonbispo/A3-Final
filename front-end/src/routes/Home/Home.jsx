@@ -24,8 +24,8 @@ const Home = () => {
       <section className={styles.content}>
         <p style={{ marginBottom: '2rem' }}>Seja bem-vindo ao seu universo de jogos! Relembre suas aventuras e registre-as para nunca mais esquecê-las.</p>
         <div>
-          {games.map((game) => (
-            <React.Fragment key={game}>
+          {games.slice().reverse().map((game) => (
+            <React.Fragment key={game.ID}>
               <GameCard
                 title={game.Name}
                 categories={game.Categories}

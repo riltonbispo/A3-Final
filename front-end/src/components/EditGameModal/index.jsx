@@ -6,7 +6,9 @@ import InputFile from '../InputFile/InputFile';
 import Rating from '@mui/material/Rating';
 import Form from 'react-bootstrap/Form';
 import styles from './style.module.css'
-import MultipleSelect from '../MultipleSelect';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const EditGameModal = (props) => {
   const [rating, setRating] = useState(props.rating);
@@ -48,8 +50,25 @@ const EditGameModal = (props) => {
           />
         </div>
         <Form className={styles.selects}>
-          <MultipleSelect list={categories} title='Categoria' selectedOptions={selectedCategories} />
-          <MultipleSelect list={platforms} title='Plataforma' selectedOptions={selectedPlatforms} />
+
+          <div>
+            <span>Categoria</span>
+            <FormGroup>
+              {categories.map((category, index) => (
+                <FormControlLabel key={`${category}-${index}`} control={<Checkbox defaultChecked={selectedCategories.includes(category)} />} label={category} />
+              ))}
+            </FormGroup>
+          </div>
+
+          <div>
+            <span>Plataforma</span>
+            <FormGroup>
+              {platforms.map((platform, index) => (
+                <FormControlLabel key={`${platform}-${index}`} control={<Checkbox defaultChecked={selectedPlatforms.includes(platform)} />} label={platform} />
+              ))}
+            </FormGroup>
+          </div>
+
         </Form>
       </Modal.Body>
       <Modal.Footer>
