@@ -8,3 +8,14 @@ export const getPlatforms = async () => {
     console.error('Erro ao buscar plataforms:', error);
   }
 }
+
+export const createPlatform = async (platformName) => {
+  try {
+    const response = await axios.post('http://localhost:3000/platforms', {
+      Name: platformName
+    });
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}

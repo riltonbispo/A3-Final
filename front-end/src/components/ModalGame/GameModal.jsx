@@ -24,6 +24,18 @@ const GameModal = (props) => {
     Image: null,
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setPlatforms(await getPlatforms());
+        setCategories(await getCategories());
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -81,18 +93,6 @@ const GameModal = (props) => {
       console.error('Error creating game:', error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setPlatforms(await getPlatforms());
-        setCategories(await getCategories());
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
 
   return (
     <Modal

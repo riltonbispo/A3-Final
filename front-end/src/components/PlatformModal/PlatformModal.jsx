@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../Button';
 import Modal from 'react-bootstrap/Modal';
 import IconButton from '@mui/material/IconButton';
@@ -10,13 +10,36 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import Field from '../Field'
 import styles from './PlatformModal.module.css'
+import { getPlatforms } from '../../services/platformAPI';
+import { createPlatform } from '../../services/platformAPI';
+
 
 function PlatformModal(props) {
   const [input, setInput] = useState('')
-  const platforms = ['Steam', 'Epic', 'PSN', 'Xbox', 'PlayStore']
+  const [platforms, setPlatforms] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setPlatforms(await getPlatforms());
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
 
   const inputChange = (value) => {
-    setGameName(value);
+    setInput(value);
+  }
+
+  const handleCreate = async () => {
+    try {
+      const response = await createPlatform(input)
+      setPlatforms((prev) => [...prev, response]);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -35,10 +58,10 @@ function PlatformModal(props) {
         <Field label="Nome do Jogo" type='text' inputChange={inputChange} />
         </div>
         <div className={`d-flex flex-column ${styles.list}`}>
-          {platforms.map((platform, index) => (
-            <div className='d-flex justify-content-between align-items-center' key={`platform ${index}`}>
+          {platforms.map((platform) => (
+            <div className='d-flex justify-content-between align-items-center' key={platform.ID}>
               <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">{platform}</InputLabel>
+                <InputLabel htmlFor="outlined-adornment-password">{platform.Name}</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type='text'
@@ -52,7 +75,7 @@ function PlatformModal(props) {
                       </IconButton>
                     </InputAdornment>
                   }
-                  label={platform}
+                  label={platform.Name}
                 />
               </FormControl>
               <IconButton
@@ -68,7 +91,7 @@ function PlatformModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} del label="Cancelar" />
-        <Button onClick={props.onHide} label="Cadastrar" />
+        <Button onClick={handleCreate} label="Cadastrar" />
       </Modal.Footer>
     </Modal>
   );
