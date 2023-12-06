@@ -14,7 +14,8 @@ export const getAll = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const { Game_ID, Platform_ID } = req.body
+    const Game_ID = parseInt(req.params.id)
+    const { Platform_ID } = req.body
 
     if (Game_ID && Platform_ID) {
       const newData = await Model.GamePlatform.create({ Game_ID, Platform_ID })
