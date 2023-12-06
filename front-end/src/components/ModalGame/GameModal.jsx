@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from '../Button';
 import Rating from '@mui/material/Rating';
@@ -9,9 +9,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { getPlatforms } from '../../services/platformAPI';
+import { getCategories } from '../../services/categoryAPI';
+import { createGamePlatofrm } from '../../services/gamePlatform'
+import { createGameCateogry } from '../../services/gameCategory'
 
 const GameModal = (props) => {
-  
+  const [platforms, setPlatforms] = useState([])
+  const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
     Name: '',
     User_Id: '1',
@@ -30,7 +35,6 @@ const GameModal = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('Name', formData.Name);
@@ -43,6 +47,27 @@ const GameModal = (props) => {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      const gameId = response.data.ID;
+
+      const selectedPlatforms = platforms.filter(platform => {
+        return formData[`platform_${platform.ID}`] === true;
+      });
+
+      const platformRequests = selectedPlatforms.map(async platform => {
+        await createGamePlatofrm(gameId, platform.ID);
+      });
+
+      const selectedCategories = categories.filter(category => {
+        return formData[`category_${category.ID}`] === true;
+      });
+
+
+      const categoryRequests = selectedCategories.map(async category => {
+        await createGameCateogry(gameId, category.ID);
+      });
+
+      await Promise.all(platformRequests, categoryRequests);
 
       setFormData({
         Name: '',
@@ -57,8 +82,17 @@ const GameModal = (props) => {
     }
   };
 
-  const platforms = ['Steam', 'Epic', 'PSN', 'Xbox', 'PlayStore']
-  const categories = ['jogado', 'jogando', 'zerado', 'nao-recomendo']
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setPlatforms(await getPlatforms());
+        setCategories(await getCategories());
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <Modal
@@ -106,19 +140,47 @@ const GameModal = (props) => {
 
           <div className={styles.selects}>
             <div>
-              <span>Categoria</span>
+              <span>Categorias</span>
               <FormGroup>
-                {categories.map((category, index) => (
-                  <FormControlLabel control={<Checkbox />} label={category} key={`${category}-${index}`} />
+                {categories.map((category) => (
+                  <FormControlLabel
+                    key={category.ID}
+                    control={
+                      <Checkbox
+                        checked={formData[`category_${category.ID}`] || false}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            [`category_${category.ID}`]: e.target.checked,
+                          });
+                        }}
+                      />
+                    }
+                    label={category.Name}
+                  />
                 ))}
               </FormGroup>
             </div>
 
             <div>
-              <span>Plataforma</span>
+              <span>Plataformas</span>
               <FormGroup>
-                {platforms.map((platform, index) => (
-                  <FormControlLabel control={<Checkbox />} label={platform} key={`${platform}-${index}`} />
+                {platforms.map((platform) => (
+                  <FormControlLabel
+                    key={platform.ID}
+                    control={
+                      <Checkbox
+                        checked={formData[`platform_${platform.ID}`] || false}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            [`platform_${platform.ID}`]: e.target.checked,
+                          });
+                        }}
+                      />
+                    }
+                    label={platform.Name}
+                  />
                 ))}
               </FormGroup>
             </div>
