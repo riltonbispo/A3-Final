@@ -22,6 +22,7 @@ export const GamePlatform = sequelize.define('GamePlatform', {
     references: {
       model: 'Platforms',
       key: 'ID',
+      onDelete: 'CASCADE'
     },
   },
 });

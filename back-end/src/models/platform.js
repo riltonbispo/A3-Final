@@ -75,15 +75,24 @@ export const update = async (id,name) => {
 
 export const del = async (id) => {
   try {
+    await sequelize.query(
+      "DELETE FROM GamePlatforms WHERE Platform_ID = ?;",
+      {
+        replacements: [id],
+        type: QueryTypes.DELETE
+      }
+    );
+
     const result = await sequelize.query(
       "DELETE FROM Platforms WHERE ID = ?;",
       {
         replacements: [id],
         type: QueryTypes.DELETE
       }
-    )
-    return result
+    );
+    return result;
   } catch (error) {
-    console.log(`BANCO: Erro ao deletar Plataforma: ${error}`)
+    console.log(`BANCO: Erro ao deletar Plataforma: ${error}`);
+    throw error;
   }
-}
+};
