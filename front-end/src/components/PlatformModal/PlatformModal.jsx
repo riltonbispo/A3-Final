@@ -8,11 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import Field from '../Field'
+import TextField from '@mui/material/TextField';
 import styles from './PlatformModal.module.css'
-import { getPlatforms } from '../../services/platformAPI';
-import { createPlatform } from '../../services/platformAPI';
-
+import { getPlatforms, createPlatform, deletePlatform } from '../../services/platformAPI';
 
 function PlatformModal(props) {
   const [input, setInput] = useState('')
@@ -29,8 +27,8 @@ function PlatformModal(props) {
     fetchData()
   }, [])
 
-  const inputChange = (value) => {
-    setInput(value);
+  const inputChange = (e) => {
+    setInput(e.target.value);
   }
 
   const handleCreate = async () => {
@@ -42,6 +40,15 @@ function PlatformModal(props) {
     }
   }
 
+  const handleDelete = async (id) => {
+    try {
+      await deletePlatform(id);
+      setPlatforms((prevPlatforms) => prevPlatforms.filter(platform => platform.ID !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Modal
       {...props}
@@ -50,12 +57,22 @@ function PlatformModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          ADICIONE UM NOVO JOGO
+          ADICIONE UMA NOVA PLATAFORMA
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className={styles.input}>
-        <Field label="Nome do Jogo" type='text' inputChange={inputChange} />
+          <TextField
+            fullWidth
+            id="outlined-basic"
+            label="Nome da Plataforma"
+            variant="outlined"
+            required
+            type="text"
+            name="Name"
+            value={input}
+            onChange={inputChange}
+          />
         </div>
         <div className={`d-flex flex-column ${styles.list}`}>
           {platforms.map((platform) => (
@@ -82,6 +99,7 @@ function PlatformModal(props) {
                 aria-label="toggle password visibility"
                 edge="end"
                 color='warning'
+                onClick={() => handleDelete(platform.ID)}
               >
                 <DeleteOutlineIcon />
               </IconButton>
@@ -90,7 +108,7 @@ function PlatformModal(props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide} del label="Cancelar" />
+        <Button onClick={props.onHide} del label="Fechar" />
         <Button onClick={handleCreate} label="Cadastrar" />
       </Modal.Footer>
     </Modal>

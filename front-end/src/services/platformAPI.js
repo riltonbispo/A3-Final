@@ -19,3 +19,11 @@ export const createPlatform = async (platformName) => {
     console.log(error)
   }
 }
+
+export const deletePlatform = async (platformId) => {
+  try {
+    await axios.delete(`http://localhost:3000/platforms/${platformId}`);
+  } catch (error) {
+    console.log(error)
+  }
+}
