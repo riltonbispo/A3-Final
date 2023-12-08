@@ -109,7 +109,7 @@ function PlatformModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide} del label="Fechar" />
-        <Button onClick={handleCreate} label="Cadastrar" />
+        <Button onClick={handleCreate} label="Salvar" />
       </Modal.Footer>
     </Modal>
   );
