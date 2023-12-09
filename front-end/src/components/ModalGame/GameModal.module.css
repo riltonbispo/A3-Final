@@ -36,3 +36,9 @@
   position: absolute;
   z-index: -1;
 }
+
+.ellipsisText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

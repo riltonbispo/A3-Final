@@ -33,6 +33,7 @@ const Home = () => {
                 platforms={game.Platforms}
                 rating={game.Rating}
                 imageTitle={game.Image}
+                gameId={game.ID}
               />
             </React.Fragment>
           ))}

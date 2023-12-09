@@ -5,7 +5,7 @@ import styles from './style.module.css'
 import Tag from '../Tag';
 import EditGameModal from '../EditGameModal';
 
-const GameCard = ({ title, rating, categories, platforms, imageUrl, imageTitle }) => {
+const GameCard = ({ title, rating, categories, platforms, imageUrl, imageTitle, gameId }) => {
   const [showModalGame, setShowModalGame] = useState(false);
 
   return (
@@ -24,12 +24,12 @@ const GameCard = ({ title, rating, categories, platforms, imageUrl, imageTitle }
         <div className={styles.tags}>
           <div>
             {categories.map(category => (
-              <Tag key={category} categorie label={category} />
+              <Tag key={category.ID} categorie label={category.Name} />
             ))}
           </div>
           <div>
             {platforms.map(platform => (
-              <Tag key={platform} platform label={platform} />
+              <Tag key={platform.ID} platform label={platform.Name} />
             ))}
           </div>
         </div>
@@ -42,6 +42,8 @@ const GameCard = ({ title, rating, categories, platforms, imageUrl, imageTitle }
         selectedCategories={categories}
         selectedPlatforms={platforms}
         imageTitle={imageTitle}
+        imageUrl={imageUrl}
+        gameId={gameId}
       />
     </div>
   );

@@ -56,12 +56,12 @@ export const create = async (req, res) => {
 export const update = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const { Name, Image, Rating } = req.body;
+    const { Name, Rating } = req.body;
 
     const existingGame = await Model.Game.findByPk(id);
 
     if (existingGame) {
-      await Model.update(id, { Name, Image, Rating });
+      await existingGame.update({ Name, Rating });
 
       return res.status(200).send();
     } else {

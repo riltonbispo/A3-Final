@@ -74,7 +74,6 @@ const GameModal = (props) => {
         return formData[`category_${category.ID}`] === true;
       });
 
-
       const categoryRequests = selectedCategories.map(async category => {
         await createGameCateogry(gameId, category.ID);
       });
@@ -122,7 +121,9 @@ const GameModal = (props) => {
             />
 
             <label htmlFor="game-photo" className={styles.container}>
-              <span className="modal__subtitle">{formData.Image ? formData.Image.name : 'Selecionar Jogo'}</span>
+              <span className={`modal__subtitle ${styles.ellipsisText}`}>
+                {formData.Image ? formData.Image.name : 'Selecionar Jogo'}
+              </span>
               <FileUploadIcon />
               <input type="file" id="game-photo" name="file" onChange={handleFileChange} required className={styles.inputFile} />
             </label>
