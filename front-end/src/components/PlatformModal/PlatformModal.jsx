@@ -10,26 +10,21 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import TextField from '@mui/material/TextField';
 import styles from './PlatformModal.module.css'
-import { getPlatforms, createPlatform, deletePlatform } from '../../services/platformAPI';
+import CheckIcon from '@mui/icons-material/Check';
+import { getPlatforms, createPlatform, deletePlatform, updatePlatform } from '../../services/platformAPI';
 
 function PlatformModal(props) {
   const [input, setInput] = useState('')
   const [platforms, setPlatforms] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setPlatforms(await getPlatforms());
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
+  const [editedNames, setEditedNames] = useState({});
 
   const inputChange = (e) => {
     setInput(e.target.value);
   }
+
+  const handleNameChange = (id, value) => {
+    setEditedNames((prev) => ({ ...prev, [id]: value }));
+  };
 
   const handleCreate = async () => {
     try {
@@ -48,6 +43,28 @@ function PlatformModal(props) {
       console.error(error);
     }
   }
+
+  const handleUpdate = async (id) => {
+    const updatedName = editedNames[id];
+    try {
+      await updatePlatform(updatedName, id);
+      setPlatforms(await getPlatforms());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setPlatforms(await getPlatforms());
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [handleUpdate])
 
   return (
     <Modal
@@ -78,22 +95,17 @@ function PlatformModal(props) {
           {platforms.map((platform) => (
             <div className='d-flex justify-content-between align-items-center' key={platform.ID}>
               <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">{platform.Name}</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type='text'
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        edge="end"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label={platform.Name}
+                <TextField
+                  fullWidth
+                  id={`outlined-basic-${platform.ID}`}
+                  label="Atualizar Nome"
+                  variant="outlined"
+                  type="text"
+                  name="Name"
+                  value={editedNames[platform.ID] || platform.Name}
+                  onChange={(e) => handleNameChange(platform.ID, e.target.value)}
                 />
+
               </FormControl>
               <IconButton
                 aria-label="toggle password visibility"
@@ -103,6 +115,15 @@ function PlatformModal(props) {
               >
                 <DeleteOutlineIcon />
               </IconButton>
+              <IconButton
+                aria-label="toggle password visibility"
+                edge="end"
+                color='primary'
+                onClick={() => handleUpdate(platform.ID)}
+              >
+                <CheckIcon />
+              </IconButton>
+
             </div>
           ))}
         </div>

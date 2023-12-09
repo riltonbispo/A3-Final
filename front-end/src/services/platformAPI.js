@@ -20,6 +20,17 @@ export const createPlatform = async (platformName) => {
   }
 }
 
+export const updatePlatform = async (platformName, platformId) => {
+  try {
+    const response = await axios.patch(`http://localhost:3000/platforms/${platformId}`, {
+      Name: platformName
+    });
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const deletePlatform = async (platformId) => {
   try {
     await axios.delete(`http://localhost:3000/platforms/${platformId}`);
