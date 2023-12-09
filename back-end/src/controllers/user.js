@@ -49,12 +49,12 @@ export const update = async (req, res) => {
     const id = parseInt(req.params.id);
     const { Email } = req.body;
 
-    const existingUser = await User.findByPk(id);
+    const existingUser = await Model.User.findByPk(id);
 
     if (existingUser) {
-      Model.update(id, Email);
+      await Model.update(id, Email);
 
-      return res.status(200)
+      return res.status(200).json({ message: 'Usuário atualizado com sucesso.' });
     } else {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
