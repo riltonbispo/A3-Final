@@ -64,7 +64,7 @@ function PlatformModal(props) {
       }
     }
     fetchData()
-  }, [handleUpdate])
+  }, [])
 
   return (
     <Modal
