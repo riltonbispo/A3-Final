@@ -17,8 +17,6 @@ router.post('/:id/platforms', Platform.create);
 router.post('/:id/categories', Category.create);
 router.post('/', upload.single('file'), Game.create);
 
-router.patch('/:id/platforms/:idPlatform', Platform.update);
-router.patch('/:id/categories/:idCategory', Category.update);
 router.patch('/:id', Game.update);
 
 router.delete('/:id/platforms/:idPlatform', Platform.del);

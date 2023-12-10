@@ -69,7 +69,7 @@ export const del = async (req, res) => {
   try {
     const id = parseInt(req.params.id)
 
-    const existingUser = await User.findByPk(id);
+    const existingUser = await Model.User.findByPk(id);
 
     if (existingUser) {
       await Model.del(id);

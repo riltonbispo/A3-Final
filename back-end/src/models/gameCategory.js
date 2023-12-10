@@ -41,21 +41,6 @@ export const getAll = async (id) => {
   }
 }
 
-export const update = async (id, gameID, categoryID) => {
-  try {
-    const result = await sequelize.query(
-      "UPDATE GameCategories SET Game_ID = :Game_ID, Category_ID = :Category_ID WHERE ID = :ID;",
-      {
-        replacements: { ID: id, Game_ID: gameID, Category_ID: categoryID },
-        type: QueryTypes.UPDATE
-      }
-    )
-    return result
-  } catch (error) {
-    console.log(`BANCO: Erro ao atualizar GamePlatform: ${error}`)
-  }
-}
-
 export const del = async (id) => {
   try {
     const result = await sequelize.query(

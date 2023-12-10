@@ -19,6 +19,7 @@ export const Game = sequelize.define('Game', {
       model: 'Users',
       key: 'id',
     },
+    onDelete: 'CASCADE',
   },
   Image: {
     type: DataTypes.STRING,
@@ -128,14 +129,20 @@ export const update = async (id, newData) => {
 
 export const del = async (id) => {
   try {
-    const result = await sequelize.query(
-      "DELETE FROM Games WHERE ID = ?;",
-      {
-        replacements: [id],
-        type: QueryTypes.UPDATE
-      }
-    )
-    return result
+    await sequelize.query("DELETE FROM GamePlatforms WHERE Game_ID = ?;", {
+      replacements: [id],
+      type: QueryTypes.DELETE,
+    });
+
+    await sequelize.query("DELETE FROM GameCategories WHERE Game_ID = ?;", {
+      replacements: [id],
+      type: QueryTypes.DELETE,
+    });
+
+    await sequelize.query("DELETE FROM Games WHERE ID = ?;", {
+      replacements: [id],
+      type: QueryTypes.DELETE,
+    });
   } catch (error) {
     console.log(`BANCO: Erro ao deleta Jogo: ${error}`)
   }
